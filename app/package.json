@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "electron .",
+    "start": "npx tsc && electron .",
     "build": "electron-builder"
   },
   "keywords": [],
