@@ -1,0 +1,39 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Tipografía general */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0f0f0f;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* Estilo para el título */
+h1 {
+    font-size: 3rem;
+    color: #1db954;
+    /* Verde Spotify */
+    text-shadow: 0 0 8px rgba(29, 185, 84, 0.5);
+    animation: pulse 2s infinite;
+}
+
+/* Animación suave */
+@keyframes pulse {
+
+    0%,
+    100% {
+        text-shadow: 0 0 8px rgba(29, 185, 84, 0.5);
+    }
+
+    50% {
+        text-shadow: 0 0 20px rgba(29, 185, 84, 0.8);
+    }
+}
