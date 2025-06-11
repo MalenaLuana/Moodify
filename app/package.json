@@ -1,0 +1,28 @@
+{
+  "name": "moodify",
+  "version": "1.0.0",
+  "description": "Moodify te dará una canción para cada estado de ánimo",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "build": {
+    "appId": "com.electron.moodify",
+    "win": {
+      "target": "nsis",
+      "icon": "./logo.ico"
+    }
+  },
+  "devDependencies": {
+    "electron": "^36.4.0",
+    "electron-builder": "^26.0.16",
+    "jest": "^29.7.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}

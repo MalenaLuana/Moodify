@@ -1,0 +1,45 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+out/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.*
+
+# TypeScript
+*.tsbuildinfo
+
+# Mac OS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# VSCode config
+.vscode/
+
+# Jest coverage
+coverage/
+
+# Electron specific
+*.asar
+*.local
+
+# Installer logs/cache
+*.log
+*.lock
+
+# Misc
+.idea/
+
+package-lock.json
