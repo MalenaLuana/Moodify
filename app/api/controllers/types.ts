@@ -41,3 +41,21 @@ export interface Track {
   images: TrackImage[];
   name: string;
 }
+
+export interface SpotifyImage {
+  url: string;
+  height: number;
+  width: number;
+}
+
+export interface RawSpotifyResponse {
+  tracks: {
+    items: Track[];
+  };
+}
+
+export interface SimplifiedTrack {
+  name: string;
+  url: string;
+  artist: { name: string };
+}

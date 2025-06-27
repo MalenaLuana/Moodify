@@ -1,14 +1,15 @@
-import { Track } from "./types";
+import { RawSpotifyResponse, SimplifiedTrack } from "./types";
 
-const getTrackData = (response: any) => {
-  const processTrack = response.tracks.items.map((track: Track) => {
+const getTrackData = (response: RawSpotifyResponse): SimplifiedTrack[] => {
+  const processTrack = response.tracks?.items?.map((track) => {
     return {
       name: track.name,
-      image: track.images,
       url: track.external_urls.spotify,
       artist: track.album.artists[0],
     };
   });
+
   return processTrack;
 };
+
 export default getTrackData;

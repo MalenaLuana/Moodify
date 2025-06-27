@@ -1,14 +1,17 @@
 import dotenv from "dotenv";
 import http from "http";
 import https from "https";
-import { EReqMethod } from "./types";
-import { Mood } from "../controllers/types";
+import { EReqMethod, genresByMood } from "./types";
 import getTrackData from "../controllers";
+import getSpotifyTrackImage from "../controllers/getSpotifyData";
 
 dotenv.config();
 const { PORT, ACCESS_TOKEN } = process.env;
 
 const server = http.createServer((req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   const reqUrl = req.url ?? "/";
   const parsedUrl = new URL(reqUrl, `http://${req.headers.host}`);
   const route = parsedUrl.pathname;
@@ -18,9 +21,11 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, { "content-type": "text/html" });
     res.end("Moodify api");
   } else if (route === "/severalTracks" && GET) {
+    const selectedMood = parsedUrl.searchParams.get("mood");
+    const genre = selectedMood ? genresByMood[selectedMood].genre : "";
     const options = {
       hostname: "api.spotify.com",
-      path: `/v1/search?q=${Mood.Angry}&type=track&limit=50`,
+      path: `/v1/search?q=${selectedMood}+genre:${genre}&type=track&limit=40`,
       method: "GET",
       headers: {
         Authorization: `Bearer ${ACCESS_TOKEN}`,
@@ -30,13 +35,21 @@ const server = http.createServer((req, res) => {
     const spotifyReq = https.request(options, (spotifyRes) => {
       let data = "";
       spotifyRes.on("data", (chunk) => (data += chunk));
-      spotifyRes.on("end", () => {
+      spotifyRes.on("end", async () => {
         res.writeHead(200, { "Content-Type": "application/json" });
-        console.log(data);
         if (data) {
-          const parseData = JSON.parse(data);
-          const processData = getTrackData(parseData);
-          res.end(JSON.stringify(processData));
+          const parsedData = JSON.parse(data);
+          const processData = await getTrackData(parsedData);
+          const randomResultIndex = Math.floor(Math.random() * 40) + 1;
+          const spotifydata = await getSpotifyTrackImage(
+            processData[randomResultIndex].url
+          );
+          res.end(
+            JSON.stringify({
+              trackData: processData[randomResultIndex],
+              image: spotifydata,
+            })
+          );
         } else {
           res.end(data);
         }
@@ -47,30 +60,7 @@ const server = http.createServer((req, res) => {
       res.writeHead(500, { "Content-Type": "text/plain" });
       res.end("Error: " + err.message);
     });
-    spotifyReq.end();
-  } else if (route === "/genres" && GET) {
-    const options = {
-      hostname: "api.spotify.com",
-      path: `/v1/recommendations/available-genre-seeds`,
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-      },
-    };
 
-    const spotifyReq = https.request(options, (spotifyRes) => {
-      let data = "";
-      spotifyRes.on("data", (chunk) => (data += chunk));
-      spotifyRes.on("end", () => {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(data);
-      });
-    });
-
-    spotifyReq.on("error", (err) => {
-      res.writeHead(500, { "Content-Type": "text/plain" });
-      res.end("Error: " + err.message);
-    });
     spotifyReq.end();
   }
 });

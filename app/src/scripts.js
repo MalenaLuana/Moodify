@@ -29,7 +29,20 @@ moods.forEach((mood) => {
       .querySelectorAll(".mood-button")
       .forEach((b) => b.classList.remove("selected"));
     btn.classList.add("selected");
-    console.log(mood.value);
+
+    fetch(`http://localhost:3000/severalTracks?mood=${mood.value}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error al hacer fetch:", error);
+      });
   });
 
   grid.appendChild(btn);
