@@ -79,3 +79,10 @@ button {
     box-shadow: #D6D6E7 0 3px 7px inset;
     transform: translateY(2px);
 }
+
+.loading{
+    display: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 20px 0;
+}

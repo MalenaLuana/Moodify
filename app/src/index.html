@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,18 +10,32 @@
     </style>
   </head>
   <body>
+    <!-- Inicio -->
     <div id="landing" class="screen active">
       <h1>Moodify</h1>
       <button id="enterBtn">Entrar</button>
     </div>
+
+    <!-- Botones -->
     <div id="dashboard" class="screen">
       <h2>Bienvenid@ a Moodify</h2>
       <p>Elegí un estado de ánimo para descubrir una canción</p>
-      
-      <div class="mood-grid" id="mood-grid">
-      </div>
-
-      
+      <div class="mood-grid" id="mood-grid"></div>
     </div>
-    <script src="scripts.js"></script>
+
+    <!--Resultado-->
+    <div id="result" class="screen">
+      <div id="loading">Cargando canción...</div>
+      <div id="track-content" style="display: none">
+        <h2 id="track-name">Canción</h2>
+        <img id="track-image" alt="Imagen del track" />
+        <p>Artista: <span id="track-artist"></span></p>
+        <a id="track-link" href="#" target="_blank">Escuchar en Spotify</a>
+        <br />
+        <button id="backBtn">Volver</button>
+      </div>
+    </div>
+
+    <script src="scripts.js" type="module"></script>
+  </body>
 </html>

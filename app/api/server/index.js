@@ -38,7 +38,7 @@ const server = http_1.default.createServer((req, res) => {
         const genre = selectedMood ? types_1.genresByMood[selectedMood].genre : "";
         const options = {
             hostname: "api.spotify.com",
-            path: `/v1/search?q=${selectedMood}&type=track&limit=40`,
+            path: `/v1/search?q=${selectedMood}+genre:${genre}&type=track&limit=40`,
             method: "GET",
             headers: {
                 Authorization: `Bearer ${ACCESS_TOKEN}`,
